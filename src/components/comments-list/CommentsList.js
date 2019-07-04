@@ -4,8 +4,9 @@ import Comment from "../comment/Comment";
 export default function CommentsList({comments}) {
     let commentsList = comments.map((item) => {
         return (
-            <Comment key={item.id}
-                     comment={item}
+            <Comment
+                key={item.id}
+                comment={item}
             />
         )
     });

@@ -1,11 +1,12 @@
 import React from 'react';
 
 export default function Comment({comment}) {
+    const {name, email, body} = comment;
     return (
         <li className='comment'>
-            <p className='title'>{comment.name}</p>
-            <p>{comment.email}</p>
-            <p>{comment.body}</p>
+            <p className='title'>{name}</p>
+            <p>{email}</p>
+            <p>{body}</p>
         </li>
     )
 }
