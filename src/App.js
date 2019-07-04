@@ -18,6 +18,9 @@ export default class App extends React.Component {
     }
 
     loadData = () => {
+        this.setState({
+            isLoaded: true,
+        });
         this._asyncRequest = PostsData().then(
             externalData => {
                 this._asyncRequest = null;
