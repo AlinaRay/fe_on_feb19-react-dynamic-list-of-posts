@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/fe_on_feb19-react-dynamic-list-of-posts/static/css/main.956f3944.chunk.css",
+    "main.js": "/fe_on_feb19-react-dynamic-list-of-posts/static/js/main.8bc70d3b.chunk.js",
+    "main.js.map": "/fe_on_feb19-react-dynamic-list-of-posts/static/js/main.8bc70d3b.chunk.js.map",
+    "runtime~main.js": "/fe_on_feb19-react-dynamic-list-of-posts/static/js/runtime~main.259f560b.js",
+    "runtime~main.js.map": "/fe_on_feb19-react-dynamic-list-of-posts/static/js/runtime~main.259f560b.js.map",
+    "static/js/2.fd0c881e.chunk.js": "/fe_on_feb19-react-dynamic-list-of-posts/static/js/2.fd0c881e.chunk.js",
+    "static/js/2.fd0c881e.chunk.js.map": "/fe_on_feb19-react-dynamic-list-of-posts/static/js/2.fd0c881e.chunk.js.map",
+    "index.html": "/fe_on_feb19-react-dynamic-list-of-posts/index.html",
+    "precache-manifest.bcfc1f3e25ce120fb3c584fc45dcf70e.js": "/fe_on_feb19-react-dynamic-list-of-posts/precache-manifest.bcfc1f3e25ce120fb3c584fc45dcf70e.js",
+    "service-worker.js": "/fe_on_feb19-react-dynamic-list-of-posts/service-worker.js",
+    "static/css/main.956f3944.chunk.css.map": "/fe_on_feb19-react-dynamic-list-of-posts/static/css/main.956f3944.chunk.css.map"
+  }
+}
