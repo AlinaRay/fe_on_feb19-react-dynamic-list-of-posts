@@ -1,5 +1,5 @@
 import React from 'react';
-import {PostsData} from './components/util/PostsData';
+import {getPostsData} from './components/util/PostsData';
 import PostList from './components/post-list/PostList';
 import SearchField from "./components/search-field/SearchField";
 
@@ -12,8 +12,9 @@ export default class App extends React.Component {
             searchFieldValue: {
                 title: '',
                 body: '',
-                user: ''
-            }
+                user: '',
+                all: ''
+            },
         }
     }
 
@@ -21,7 +22,7 @@ export default class App extends React.Component {
         this.setState({
             isLoaded: true,
         });
-        this._asyncRequest = PostsData().then(
+        this._asyncRequest = getPostsData().then(
             externalData => {
                 this._asyncRequest = null;
                 this.setState({
@@ -31,62 +32,39 @@ export default class App extends React.Component {
         );
     };
     showFilteredPosts = () => {
-
         const fieldType = this.state.searchFieldType;
         const searchFieldValue = this.state.searchFieldValue[fieldType].trim().toLowerCase();
         if (!searchFieldValue.trim()) {
             return;
         }
-        if (fieldType === 'user') {
-            return this.state.postsData.filter(
-                post => post.user.name.trim().toLowerCase().includes(searchFieldValue)
-            )
-        }
-        return this.state.postsData.filter(
-            post => post[fieldType].trim().toLowerCase().includes(searchFieldValue)
-        );
-    };
-    updateSearchFieldsValue = (e) => {
-        this.setState({
-            searchFieldType: e.target.name
+        return this.state.postsData.filter(post => {
+            if (fieldType === 'all') {
+                return post.title.trim().toLowerCase().includes(searchFieldValue) ||
+                    post.body.trim().toLowerCase().includes(searchFieldValue) ||
+                    post.user.name.trim().toLowerCase().includes(searchFieldValue)
+            } else if (fieldType === 'user') {
+                return post.user.name.trim().toLowerCase().includes(searchFieldValue)
+            } else {
+                return post[fieldType].trim().toLowerCase().includes(searchFieldValue)
+            }
         });
-        switch (e.target.name) {
-            case 'title':
-                this.setState({
-                    searchFieldValue: {
-                        'title': e.target.value,
-                        'body': '',
-                        'user': ''
-                    }
-                });
-                break;
-            case 'body':
-                this.setState({
-                    searchFieldValue: {
-                        'title': '',
-                        'body': e.target.value,
-                        'user': ''
-                    }
-                });
-                break;
-            case 'user':
-                this.setState({
-                    searchFieldValue: {
-                        'title': '',
-                        'body': '',
-                        'user': e.target.value
-                    }
-                });
-                break;
-            default:
-                console.log('unknown type');
-                break;
-        }
+    };
+    updateSearchFieldsValue = (e, {name, value} = e.target) => {
+        const newFieldValue = this.state.searchFieldValue;
+        Object.keys(newFieldValue).forEach((item) => {
+            newFieldValue[item] = item === name ? value : '';
+        });
+        this.setState({
+                searchFieldType: name,
+                searchFieldValue: newFieldValue,
+                postsToRender: this.showFilteredPosts() || this.state.postsData
+            }
+        );
     };
 
     render() {
-        const {postsData, isLoaded, searchFieldValue: {title, body, user}} = this.state;
-        let postsToRender = this.showFilteredPosts() || postsData;
+        const {postsData, postsToRender, isLoaded, searchFieldValue: {title, body, user, all}} = this.state;
+        let postsToShow = postsToRender || postsData;
         return (
             <div>
                 <h1
@@ -96,31 +74,33 @@ export default class App extends React.Component {
                 {postsData ? (
                     <div>
                         <span className='subtitle'>
-                            Amout of shown posts is {postsToRender.length}
+                            Amout of shown posts is {postsToShow.length}
                         </span>
-                        <form
-                            className='form'>
+                        <div
+                            className='input-wrapper'>
                             <SearchField
-                                key={1}
+                                searchFieldType='all'
+                                searchFieldValue={all}
+                                updateSearchFieldsValue={this.updateSearchFieldsValue}
+                            />
+                            <SearchField
                                 searchFieldType='title'
                                 searchFieldValue={title}
                                 updateSearchFieldsValue={this.updateSearchFieldsValue}
                             />
                             <SearchField
-                                key={2}
                                 searchFieldType='body'
                                 searchFieldValue={body}
                                 updateSearchFieldsValue={this.updateSearchFieldsValue}
                             />
                             <SearchField
-                                key={3}
                                 searchFieldType='user'
                                 searchFieldValue={user}
                                 updateSearchFieldsValue={this.updateSearchFieldsValue}
                             />
-                        </form>
+                        </div>
                         <PostList
-                            posts={postsToRender}/>
+                            posts={postsToShow}/>
                     </div>
                 ) : (
                     <button

@@ -2,7 +2,7 @@ import {UsersApi} from './UsersApi';
 import {PostsApi} from './PostsApi';
 import {CommentsApi} from './CommentsApi';
 
-export async function PostsData() {
+export async function getPostsData() {
     const [posts, users, comments] = await Promise.all([
         PostsApi(),
         UsersApi(),
@@ -13,6 +13,5 @@ export async function PostsData() {
         user: users.find(user => user.id === post.userId),
         comments: [...comments.filter(comment => comment.postId === post.id)]
     }));
-    // console.log(postsData);
     return postsData;
 };
