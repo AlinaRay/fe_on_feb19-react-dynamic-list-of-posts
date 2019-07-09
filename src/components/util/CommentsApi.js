@@ -1,9 +1,4 @@
-import { comments} from './comments.js'
-
-export default function CommentsApi() {
-    return {
-        getAllComments() {
-            return comments;
-        }
-    }
-}
+export const CommentsApi = () => {
+    return fetch('https://jsonplaceholder.typicode.com/comments')
+        .then(response => response.json());
+};

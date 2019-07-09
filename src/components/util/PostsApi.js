@@ -1,9 +1,4 @@
-import {posts} from './posts.js'
-
-export default function PostsApi() {
-    return {
-        getAllPosts() {
-            return posts;
-        }
-    }
-}
+export const PostsApi = () => {
+    return fetch('https://jsonplaceholder.typicode.com/posts')
+        .then(response => response.json());
+};
