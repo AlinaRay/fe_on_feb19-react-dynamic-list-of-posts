@@ -22,9 +22,8 @@ export default class App extends React.Component {
         this.setState({
             isLoaded: true,
         });
-        this._asyncRequest = getPostsData().then(
+        getPostsData().then(
             externalData => {
-                this._asyncRequest = null;
                 this.setState({
                     postsData: externalData
                 });
@@ -64,7 +63,7 @@ export default class App extends React.Component {
 
     render() {
         const {postsData, postsToRender, isLoaded, searchFieldValue: {title, body, user, all}} = this.state;
-        let postsToShow = postsToRender || postsData;
+        const postsToShow = postsToRender || postsData;
         return (
             <div>
                 <h1
